@@ -194,6 +194,7 @@ import Data.Semigroup ( Semigroup(..) )
 import Data.Coerce
 import qualified GHC.Exts as Exts
 import Unsafe.Coerce
+import System.IO.Unsafe
 
 #include "vector.h"
 
@@ -253,7 +254,7 @@ instance Storable a => G.Vector Vector a where
 
   {-# INLINE basicUnsafeIndexM #-}
   basicUnsafeIndexM (Vector _ fp) i = return
-                                    . unsafeInlineIO
+                                    . unsafePerformIO
                                     $ unsafeWithForeignPtr fp $ \p ->
                                       peekElemOff p i
 
